@@ -2,6 +2,7 @@ import asyncio
 import logging
 from typing import List, Dict, Any, Optional
 from pydantic import BaseModel
+from omega_spine import OmegaSpine
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -31,6 +32,7 @@ class OmegaOrchestrator:
         self.engines = ["star", "aletheia", "omnissiah", "kingdom", "alphabet"]
         self.qci_threshold = 0.85
         self.invariant = 1.89
+        self.spine = OmegaSpine()
         self.canonical_constants = {
             "harmony_ridge": 1.67,
             "binary_break": 1.7333,
@@ -55,8 +57,16 @@ class OmegaOrchestrator:
         # 2. Consensus & Synthesis (KINGDOM Algorithm)
         consensus_result = self._run_consensus(engine_results)
         
-        # 3. Truth Verification (Aletheia Check)
-        is_truthful = self._verify_truth(consensus_result)
+        # 3. Truth Verification (Aletheia Check via Spine)
+        stmt_id = self.spine.add_statement(
+            content=consensus_result,
+            category="unresolved",
+            mode="assertion",
+            source="agent",
+            provenance={"orchestrator": "v2.0", "engines": self.engines}
+        )
+        discernment = self.spine.discern_truth(stmt_id)
+        is_truthful = discernment["status"] == "verified"
         
         # 4. Final Alignment (Omnissiah Sync)
         final_output = self._align_output(consensus_result, is_truthful)

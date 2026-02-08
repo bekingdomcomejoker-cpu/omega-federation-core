@@ -56,6 +56,20 @@ The other four engines are:
 *   **Role**: Manages linguistic structure and symbolic representation.
 *   **Mechanism**: Advanced NLP techniques to ensure clarity and structural integrity.
 
+## 🏛️ Omega Spine (Memory Layer)
+
+The **Omega Spine** is a 3-tier append-only memory system that serves as the canonical record for the Federation.
+
+*   **Tier 1: Signal (Ephemeral)**: Raw inputs and transient events.
+*   **Tier 2: Spine (Append-only Ledger)**: Immutable records of Statements, Temporal Envelopes, and Relations.
+*   **Tier 3: Archive (Derived)**: Consolidated knowledge, embeddings, and long-term storage.
+
+#### Invariants:
+1.  **Append-only**: No deletions, only supersessions.
+2.  **Provenance**: Every record tracks its origin, tool version, and timestamp.
+3.  **Temporal Envelopes**: Every statement has a defined validity window.
+4.  **Discernment**: Truth is determined by checking contradictions across the ledger.
+
 ## 📊 Data Flow
 
 1.  **Request**: `UnifiedAnalysisRequest` (JSON)

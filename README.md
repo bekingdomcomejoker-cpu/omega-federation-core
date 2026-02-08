@@ -49,6 +49,7 @@ The other four engines are:
 *   **Self-Correction**: Automatic refinement when Quality Control Index (QCI) falls below threshold.
 *   **Predictive Failure Prevention**: Proactive identification of systemic bottlenecks.
 *   **Real-Time Monitoring**: WebSocket-driven updates for all orchestration events.
+*   **Canonical Spine Memory**: A 3-tier append-only ledger for truth discernment and long-term memory.
 
 ## 🏗️ System Architecture
 
