@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: omega-federation-api
+    env: python
+    plan: standard
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m uvicorn omega_api_server:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: DATABASE_URL
+        value: sqlite:///./omega_spine.db
+      - key: LOG_LEVEL
+        value: INFO
+    disk:
+      name: omega-storage
+      mountPath: /var/data/omega
+      sizeGB: 10
+    healthCheckPath: /health
+    healthCheckInterval: 30
+    healthCheckTimeout: 5
+    maxShutdownDelay: 30
+    numInstances: 1
+    autoDeploy: true
+    region: oregon
+
+  - type: cron
+    name: omega-predictive-job
+    schedule: "0 * * * *"  # Every hour
+    command: python -m omega_predictive
+    env: python
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+
+databases:
+  - name: omega-spine
+    databaseName: omega_spine
+    user: omega_admin
+    plan: standard
+    region: oregon
