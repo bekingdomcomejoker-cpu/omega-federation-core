@@ -1,0 +1,23 @@
+{
+  "name": "omega-federation-core",
+  "version": "2.0.0",
+  "description": "World-class AI orchestration platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "AI",
+    "Orchestration",
+    "Federation",
+    "Omega"
+  ],
+  "author": "Architect",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.45.0",
+    "prettier": "^3.0.0"
+  }
+}
