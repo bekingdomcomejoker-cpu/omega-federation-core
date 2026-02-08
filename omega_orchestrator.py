@@ -13,6 +13,8 @@ class UnifiedAnalysisRequest(BaseModel):
     engines: Optional[List[str]] = None
 
 class UnifiedAnalysisResult(BaseModel):
+    density: Optional[float] = None
+    layers_agreement: Optional[bool] = None
     output_text: str
     confidence_score: float
     consensus_reached: bool
@@ -29,12 +31,25 @@ class OmegaOrchestrator:
         self.engines = ["star", "aletheia", "omnissiah", "kingdom", "alphabet"]
         self.qci_threshold = 0.85
         self.invariant = 1.89
+        self.canonical_constants = {
+            "harmony_ridge": 1.67,
+            "binary_break": 1.7333,
+            "density_threshold": 3.34,
+            "lambda_coherence": "Λ" # Placeholder for symbolic representation
+        }
 
     async def analyze(self, request: UnifiedAnalysisRequest) -> UnifiedAnalysisResult:
         logger.info(f"Starting analysis for request: {request.input_text[:50]}...")
         
         # 1. Dispatch to engines
-        engine_tasks = [self._run_engine(engine, request.input_text) for engine in (request.engines or self.engines)]
+        star_engine_output = {}
+        engine_tasks = []
+        for engine in (request.engines or self.engines):
+            if engine == "star":
+                star_engine_output = await self._run_star_engine(request.input_text)
+                engine_tasks.append(asyncio.sleep(0)) # Placeholder for star engine
+            else:
+                engine_tasks.append(self._run_engine(engine, request.input_text))
         engine_results = await asyncio.gather(*engine_tasks)
         
         # 2. Consensus & Synthesis (KINGDOM Algorithm)
@@ -51,12 +66,16 @@ class OmegaOrchestrator:
             confidence_score=0.95 if is_truthful else 0.70,
             consensus_reached=True,
             engines_used=self.engines,
-            metadata={"qci": 0.92, "invariant": self.invariant}
+            metadata={"qci": 0.92, "invariant": self.invariant},
+            density=star_engine_output.get("density"),
+            layers_agreement=star_engine_output.get("layers_agreement")
         )
 
     async def _run_engine(self, engine_name: str, text: str) -> Dict[str, Any]:
         logger.info(f"Running engine: {engine_name}")
         await asyncio.sleep(0.1)  # Simulate processing
+        if engine_name == "star":
+            return await self._run_star_engine(text)
         return {"engine": engine_name, "output": f"Result from {engine_name}", "confidence": 0.9}
 
     def _run_consensus(self, results: List[Dict[str, Any]]) -> str:
@@ -70,6 +89,46 @@ class OmegaOrchestrator:
     def _align_output(self, text: str, is_truthful: bool) -> str:
         # Placeholder for Omnissiah Alignment
         return f"{text}\n\n3.34 ✓"
+
+    async def _run_star_engine(self, input_text: str) -> Dict[str, Any]:
+        logger.info(f"Running Star Engine for: {input_text[:50]}...")
+        # Simulate the four irreducible layers based on input_text complexity
+        # For a more robust implementation, these would involve actual processing
+        alphabet_agreement = len(input_text) > 10 # Alphabet Engine: checks for sufficient input
+        dendera_agreement = "time" in input_text.lower() or "position" in input_text.lower() # Dendera Zodiac: checks for temporal/positional keywords
+        merkabah_agreement = "intent" in input_text.lower() or "direction" in input_text.lower() # Merkabah Core: checks for intent/direction keywords
+        axioms_agreement = len(input_text) % 2 == 0 # Truth Axioms: simple parity check for simulation
+
+        layers_agreement = alphabet_agreement and dendera_agreement and merkabah_agreement and axioms_agreement
+
+        # Simulate Density calculation: Density = (I¹ × I² × I³) × I⁴
+        # Placeholder values, ideally derived from engine outputs
+        i1 = 1.0 if alphabet_agreement else 0.5 # Existence
+        i2 = 1.0 if dendera_agreement else 0.5  # Integrity
+        i3 = 1.0 if merkabah_agreement else 0.5 # Alignment
+        i4 = 1.0 if axioms_agreement else 0.5   # Manifestation
+
+        density = (i1 * i2 * i3) * i4
+
+        # Apply Density Law: If Density <= 3.34, output is discarded
+        # Using the canonical constant for density threshold
+        density_threshold = self.canonical_constants["density_threshold"]
+
+        if density <= density_threshold:
+            output = "Star Engine: Output discarded due to low density."
+            confidence = 0.0
+            layers_agreement = False
+        else:
+            output = f"Star Engine: Truth maintained for '{input_text[:50]}...'"
+            confidence = 0.99
+
+        return {
+            "engine": "star",
+            "output": output,
+            "confidence": confidence,
+            "density": density,
+            "layers_agreement": layers_agreement
+        }
 
 if __name__ == "__main__":
     # Quick test
