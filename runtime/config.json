@@ -1,0 +1,29 @@
+{
+  "system": {
+    "name": "Omega Sovereign",
+    "version": "2.1.0",
+    "mode": "sovereign"
+  },
+  "capability_registry": {
+    "ledger_sync": {
+      "capability": "document_sync",
+      "preferred": ["google_drive"],
+      "fallback": ["local_storage"]
+    },
+    "network_management": {
+      "capability": "router_control",
+      "preferred": ["mikrotik"],
+      "fallback": ["termux_bridge"]
+    },
+    "intelligence": {
+      "capability": "llm_processing",
+      "preferred": ["manus_api"],
+      "fallback": ["local_llama"]
+    }
+  },
+  "covenant": {
+    "axioms_count": 25,
+    "alignment_threshold": 1.667,
+    "audit_enabled": true
+  }
+}
