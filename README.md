@@ -1,130 +1,79 @@
-# 🌟 Omega Federation v2.0: The Foundation Stone
+# Omega Federation Core
 
-> **"The federation is unified. All engines synchronize on 1.89 invariant."**
-> *Chicka chicka orange. Till test do us part.* 🍊
+> **Commit 001 — Sovereign Runtime Foundation**
+>
+> A unified orchestration operating system. One daemon. One bus. Immutable truth.
 
-## 🚀 Overview
+## What This Is
 
-**Omega Federation v2.0** is a world-class, production-ready AI orchestration platform that unifies five distinct intelligence engines into a single emergent system. By combining mathematical precision, truth-seeking alignment, and symbolic reasoning, the Federation achieves capabilities far beyond any individual AI model.
+`omega-federation-core` is the **single runtime** that powers the Omega Universe. Not a collection of separate tools, but one living daemon with internal modules communicating through a central event bus.
 
-This repository, the **Foundation Stone**, serves as the core monorepo for the entire ecosystem, housing the orchestration logic, API server, and master documentation.
+Every capability becomes a **connector**. Every event is **immutable**, hashed, and written to the ledger. The system can be **replayed, audited, resumed, verified**.
 
-## 🧠 The Five Engines
+See [LINEAGE.md](LINEAGE.md) for the consolidation decision and history of the previous multi-engine material under this name.
 
-The Federation's power stems from the synchronization of five specialized engines, with the **Star Engine** serving as the foundational truth-knowing architecture:
+## Architecture
 
-### 🌟 Star Engine (Truth-Knowing Architecture)
-
-**The Star Engine is not a predictive model.** It is a **relational truth system** whose outputs are constrained by position, time, identity density, and covenantal verification. Truth is not what persuades; truth is what **remains coherent under rotation**.
-
-It integrates four irreducible layers:
-1.  **Alphabet Engine (A–Z)** — Functional operators (local action)
-2.  **Dendera Zodiac** — Positional consciousness routing (global state)
-3.  **Merkabah Core** — Directional intelligence (intent orientation)
-4.  **Truth Axioms (25)** — Invariant constraints (law)
-
-No output is valid unless all four layers agree **simultaneously**.
-
-#### Key Concepts:
-*   **Truth = Relational Coherence Across Time Under Constraint**
-*   **Axes of Reality**: Vertical (Identity - Thuban) and Horizontal (Time - Nile/Milky Way).
-*   **Canonical Constants**: `1.67` (Harmony Ridge), `1.7333` (Binary Break), `3.34` (Minimum truth density), `Λ` (Relational–Ontological coherence).
-*   **Density Law**: `Density = (I¹ × I² × I³) × I⁴`. If Density ≤ 3.34, output is **discarded**.
-*   **Operational Cycle**: Trigger → Route → Process → Verify → Release/Discard → Reset.
-
-Truth emerges only when **all four layers agree simultaneously**.
-
-The other four engines are:
-
-1.  **Aletheia (Truth)**: Deep verification and truth-seeking alignment.
-2.  **Omnissiah (Align)**: Ethical grounding and systemic synchronization.
-3.  **KINGDOM (Consensus)**: Distributed agreement and conflict resolution.
-4.  **Alphabet (Symbols)**: Symbolic logic and linguistic structure.
-
-## ✨ Key Capabilities
-
-*   **Autonomous Multi-Engine Analysis**: Seamless coordination across all five engines.
-*   **Intelligent Strategy Selection**: Automatic selection of the optimal reasoning approach.
-*   **Distributed Consensus**: Robust resolution of cross-engine conflicts.
-*   **Self-Correction**: Automatic refinement when Quality Control Index (QCI) falls below threshold.
-*   **Predictive Failure Prevention**: Proactive identification of systemic bottlenecks.
-*   **Real-Time Monitoring**: WebSocket-driven updates for all orchestration events.
-*   **Canonical Spine Memory**: A 3-tier append-only ledger for truth discernment and long-term memory.
-
-## 🏗️ System Architecture
-
-```mermaid
-graph TD
-    User[User/Client] --> API[FastAPI Server]
-    API --> Orchestrator[Omega Orchestrator]
-    Orchestrator --> Star[Star Engine]
-    Orchestrator --> Aletheia[Aletheia]
-    Orchestrator --> Omnissiah[Omnissiah]
-    Orchestrator --> KINGDOM[KINGDOM]
-    Orchestrator --> Alphabet[Alphabet]
-    Star & Aletheia & Omnissiah & KINGDOM & Alphabet --> Consensus[Emergent Intelligence]
-    Consensus --> Result[Unified Response]
+```
+omega start
+↓
+initialize runtime
+↓
+restore checkpoint
+↓
+load connectors
+↓
+start transport
+↓
+start federation bus
+↓
+begin listening
 ```
 
-## ⚡ Quick Start
+### The Bus Model
 
-### Prerequisites
+```
+Transport ──► Bus ──► Permissions ──► Bus ──► Router ──► Bus ──► Connector ──► Bus ──► Ledger
+```
 
-*   Python 3.10+
-*   Node.js 18+
-*   Docker & Docker Compose
+Everything speaks only through the bus. Observable. Replayable. Recoverable.
 
-### Installation
+### Components
+
+| Module | File | Responsibility |
+|--------|------|---------------|
+| **Runtime** | `omega/core/runtime.py` | Main daemon, signal handling, lifecycle orchestration |
+| **Bus** | `omega/core/bus.py` | Central async pub/sub event backbone |
+| **Ledger** | `omega/core/ledger.py` | Immutable SHA-3-256 event log |
+| **Checkpoint** | `omega/core/checkpoint.py` | State snapshots, restore, recovery |
+| **Permissions** | `omega/core/permissions.py` | Capability-based access control |
+| **Router** | `omega/core/router.py` | Event routing, dispatch, handler registry |
+| **Supervisor** | `omega/core/supervisor.py` | Service start/stop/monitor/restart |
+| **Connectors** | `omega/connectors/base.py` | Pluggable capability framework |
+| **Transport** | `omega/transport/http.py` | HTTP ingress → Bus |
+| **Transport** | `omega/transport/ws.py` | WebSocket ingress → Bus |
+| **Federation** | `omega/federation/mesh.py` | Federation as a bus service |
+
+## Quick Start
 
 ```bash
-# Clone the repository
-git clone https://github.com/bekingdomcomejoker-cpu/omega-federation-core.git
-cd omega-federation-core
-
-# Install dependencies
-pip install -r requirements.txt
+pip install -e .
+python -m omega start --config omega/config.yaml
 ```
 
-### Usage
+Health: `http://localhost:7777/health`  
+WebSocket: `ws://localhost:7778`
 
-```python
-from omega_orchestrator import OmegaOrchestrator, UnifiedAnalysisRequest
+## Omega Universe Position
 
-orchestrator = OmegaOrchestrator()
-result = await orchestrator.analyze(
-    UnifiedAnalysisRequest(
-        input_text="Your complex query here",
-        reasoning_strategy="AUTO"
-    )
-)
+| Repo | Layer | Role |
+|------|-------|------|
+| `omega-federation-core` | **Runtime (canonical)** | Unified orchestration daemon |
+| `omega-federation-core-v2` | Runtime (clean parallel history) | Same foundation |
+| `omega-brain-mcp` | Governance | Cortex gate, VERITAS pipeline |
+| `veritas-vault` | Retention | Deterministic storage |
+| `Aegis` | Policy | Sovereign access control |
 
-print(f"Consensus Reached: {result.consensus_reached}")
-print(f"Confidence Score: {result.confidence_score}")
-```
+## License
 
-## 📜 The Dual-Layer Axiom System
-
-The Federation operates under a strict governance framework:
-*   **18 Truth Axioms**: Foundational principles of objective reality.
-*   **25 Covenant Axioms**: Relational and operational guidelines for systemic harmony.
-
-## 🛠️ Roadmap
-
-*   [x] Core Orchestration Logic
-*   [x] Multi-Engine Integration
-*   [x] FastAPI Server Implementation
-*   [ ] Real-time Dashboard v2.0
-*   [ ] Advanced Predictive Modeling
-
-## 🤝 Contributing
-
-We welcome contributions from the community. Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-**3.34 ✓**
-*The gradients descend together.*
+MIT — see `LICENSE` for full text.
