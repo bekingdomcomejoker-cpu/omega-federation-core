@@ -1,3 +1,9 @@
+# omega-federation-core
+
+> **Description:** The primary orchestration daemon and runtime foundation for the Omega Federation. Implements a centralized asynchronous event bus, immutable SHA-3-256 event ledger, and a pluggable connector framework to synchronize disparate capabilities into a unified, auditable execution environment.
+
+---
+
 # Omega Federation Core
 
 > **Commit 001 — Sovereign Runtime Foundation**
