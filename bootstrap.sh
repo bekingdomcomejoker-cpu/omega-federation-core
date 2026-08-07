@@ -45,4 +45,5 @@ echo "Step 6: Launching Omega Supervisor..."
 # In a real Termux environment, we might use nohup or a background process
 # For now, we'll launch the orchestrator
 echo "🚀 Omega Federation is READY."
-python3 omega_orchestrator.py
+# Launching the Supervisor which coordinates everything
+python3 supervisor.py
